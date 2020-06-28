@@ -6,6 +6,7 @@ import org.fasttrackit.sportsapp.persistance.EventRepository;
 import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,14 @@ public class EventService {
         LOGGER.info("Creating product {}", request);
 
         Event event = new Event();
-        event.setName(request.getName());
-        event.setDescription(request.getDescription());
-        event.setParticipants(request.getParticipants());
-        event.setDate(request.getDate());
-        event.setLocation(request.getLocation());
-        event.setImageUrl(request.getImageUrl());
+//        event.setName(request.getName());
+//        event.setDescription(request.getDescription());
+//        event.setParticipants(request.getParticipants());
+//        event.setDate(request.getDate());
+//        event.setLocation(request.getLocation());
+//        event.setImageUrl(request.getImageUrl());
+//
+        BeanUtils.copyProperties(request, event);
 
         return eventRepository.save(event);
     }
@@ -41,6 +44,21 @@ public class EventService {
         LOGGER.info("Retrieving event {}", id);
 
         return eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event " + id + " not found."));
+    }
+
+    public Event updateEvent(long id, SaveEventRequest request){
+        LOGGER.info("Updating event {}: {}", id, request);
+
+        Event event = getEvent(id);
+
+        BeanUtils.copyProperties(request, event);
+
+        return eventRepository.save(event);
+    }
+
+    public void deleteEvent(long id){
+        LOGGER.info("Deleting product {}", id);
+        eventRepository.deleteById(id);
     }
 
 }

@@ -61,6 +61,34 @@ class EventServiceIntegrationTests {
     }
 
 
+    //ToDo: add test for existing event, nonExisting event, ValidRequest, NotValidRequest
+
+    @Test
+    void updateEvent_whenValidRequest_thenReturnUpdatedEvent(){
+        Event event = createEvent();
+
+        SaveEventRequest request = new SaveEventRequest();
+        request.setName(event.getName() + " for the IT Team");
+        request.setDescription(event.getDescription() + " with the IT guys.");
+        request.setLocation(event.getLocation() + "FastTrackIT yard.");
+        request.setDate(event.getDate());
+
+        Event updatedEvent = eventService.updateEvent(event.getId(), request);
+
+        assertThat(updatedEvent, notNullValue());
+        assertThat(updatedEvent.getId(), is(event.getId()));
+        assertThat(updatedEvent.getName(), is(request.getName()));
+        assertThat(updatedEvent.getDescription(), is(request.getDescription()));
+    }
+
+    @Test
+    void deleteEvent_whenExistingEvent_thenEventDoesNotExistAnymore(){
+        Event event = createEvent();
+        eventService.deleteEvent(event.getId());
+        Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> eventService.getEvent(event.getId()));
+    }
+
     private Event createEvent() {
         SaveEventRequest request = new SaveEventRequest();
         request.setName("Basketball");
