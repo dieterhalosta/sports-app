@@ -1,6 +1,7 @@
 package org.fasttrackit.sportsapp.service;
 
 import org.fasttrackit.sportsapp.domain.Event;
+import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.EventRepository;
 import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
 import org.slf4j.Logger;
@@ -35,4 +36,11 @@ public class EventService {
 
         return eventRepository.save(event);
     }
+
+    public Event getEvent(long id){
+        LOGGER.info("Retrieving event {}", id);
+
+        return eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event " + id + " not found."));
+    }
+
 }
