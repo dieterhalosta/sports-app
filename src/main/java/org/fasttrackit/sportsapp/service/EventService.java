@@ -28,14 +28,14 @@ public class EventService {
         LOGGER.info("Creating product {}", request);
 
         Event event = new Event();
-//        event.setName(request.getName());
-//        event.setDescription(request.getDescription());
-//        event.setParticipants(request.getParticipants());
-//        event.setDate(request.getDate());
-//        event.setLocation(request.getLocation());
-//        event.setImageUrl(request.getImageUrl());
+        event.setName(request.getName());
+        event.setDescription(request.getDescription());
+        event.setParticipants(request.getParticipants());
+        event.setDate(request.getDate());
+        event.setLocation(request.getLocation());
+        event.setImageUrl(request.getImageUrl());
 //
-        BeanUtils.copyProperties(request, event);
+//        BeanUtils.copyProperties(request, event);
 
         return eventRepository.save(event);
     }
