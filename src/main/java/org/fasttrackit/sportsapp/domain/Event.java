@@ -1,6 +1,8 @@
 package org.fasttrackit.sportsapp.domain;
 
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class Event {
     private String name;
     @NotNull
     private String description;
+    @Range(min = 2)
     private int participants;
     @NotNull
     private LocalDate date;
