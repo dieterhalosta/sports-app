@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.ResourceAccessException;
 
 import javax.validation.ConstraintViolationException;
+import java.sql.Date;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -48,7 +49,7 @@ class EventServiceIntegrationTests {
         assertThat(response, notNullValue());
         assertThat(response.getId(), is(event.getId()));
         assertThat(response.getName(), is(event.getName()));
-//        assertThat(response.getDate(), is(event.getDate()));
+        assertThat(response.getDate(), is(event.getDate()));
         assertThat(response.getDescription(), is(event.getDescription()));
         assertThat(response.getLocation(), is(event.getLocation()));
         assertThat(response.getParticipants(), is(event.getParticipants()));
@@ -60,18 +61,15 @@ class EventServiceIntegrationTests {
                 () -> eventService.getEvent(0));
     }
 
-
-    //ToDo: add test for existing event, nonExisting event, ValidRequest, NotValidRequest
-
     @Test
-    void updateEvent_whenValidRequest_thenReturnUpdatedEvent(){
+    void updateEvent_whenExistingEventAndValidRequest_thenReturnUpdatedEvent(){
         Event event = createEvent();
 
         SaveEventRequest request = new SaveEventRequest();
         request.setName(event.getName() + " for the IT Team");
         request.setDescription(event.getDescription() + " with the IT guys.");
         request.setLocation(event.getLocation() + "FastTrackIT yard.");
-        request.setDate(event.getDate());
+        request.setDate(LocalDate.parse("2020-10-22"));
 
         Event updatedEvent = eventService.updateEvent(event.getId(), request);
 
@@ -79,6 +77,32 @@ class EventServiceIntegrationTests {
         assertThat(updatedEvent.getId(), is(event.getId()));
         assertThat(updatedEvent.getName(), is(request.getName()));
         assertThat(updatedEvent.getDescription(), is(request.getDescription()));
+    }
+
+    @Test
+    void updateEvent_whenNonExistingEvent_thenThrowResourceNotFoundException(){
+
+        SaveEventRequest request = new SaveEventRequest();
+        request.setName("Rugby");
+        request.setDescription("Rubgy match for the IT guys");
+        request.setLocation("Baia Mare Stadium");
+        request.setDate(LocalDate.parse("2020-10-22"));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> eventService.updateEvent(0, request ));
+    }
+
+    @Test
+    void updateEvent_whenNotAValidRequest_thenThrowException(){
+
+        Event event = createEvent();
+        SaveEventRequest request = new SaveEventRequest();
+        request.setName(event.getName() + " for the IT Team");
+        request.setDescription(event.getDescription() + " with the IT guys.");
+
+        try {
+            eventService.updateEvent(event.getId(), request);
+        } catch (Exception e) {
+            assertThat("Unexpected exception thrown.", e instanceof ConstraintViolationException);
+        }
     }
 
     @Test
@@ -92,7 +116,7 @@ class EventServiceIntegrationTests {
     private Event createEvent() {
         SaveEventRequest request = new SaveEventRequest();
         request.setName("Basketball");
-        request.setDate(LocalDate.now());
+        request.setDate(LocalDate.parse("2020-10-20"));
         request.setDescription("A short game");
         request.setLocation("LA");
         request.setParticipants(8);
