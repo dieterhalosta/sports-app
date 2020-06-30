@@ -70,6 +70,7 @@ class EventServiceIntegrationTests {
         request.setDescription(event.getDescription() + " with the IT guys.");
         request.setLocation(event.getLocation() + "FastTrackIT yard.");
         request.setDate(LocalDate.ofEpochDay(2020-10-22));
+        request.setParticipants(event.getParticipants());
 
         Event updatedEvent = eventService.updateEvent(event.getId(), request);
 
@@ -86,7 +87,7 @@ class EventServiceIntegrationTests {
         request.setName("Rugby");
         request.setDescription("Rubgy match for the IT guys");
         request.setLocation("Baia Mare Stadium");
-        request.setDate(LocalDate.of(2020, 07,22));
+        request.setDate(LocalDate.of(2020, 7,22));
         Assertions.assertThrows(ResourceNotFoundException.class, () -> eventService.updateEvent(0, request ));
     }
 
@@ -115,10 +116,10 @@ class EventServiceIntegrationTests {
 
     private Event createEvent() {
         SaveEventRequest request = new SaveEventRequest();
-        request.setName("Basketball");
-        request.setDate(LocalDate.of(2020, 07,12));
+        request.setName("Carting");
+        request.setDate(LocalDate.of(2020, 7,10));
         request.setDescription("A short game");
-        request.setLocation("LA");
+        request.setLocation("Cluj");
         request.setParticipants(8);
 
 

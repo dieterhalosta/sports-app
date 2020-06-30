@@ -3,7 +3,7 @@ spring:
   jpa:
     hibernate.ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
-  datasource.:
-    url: jdbc:mysql://localhost:3306/sports_app?serverTimezone=UTC
+  datasource:
+    url: jdbc:mysql://localhost:3306/sports_app
     username: sports_app
     password: sports_app
