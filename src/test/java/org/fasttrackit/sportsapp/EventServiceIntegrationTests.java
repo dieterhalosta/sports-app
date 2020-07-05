@@ -45,7 +45,7 @@ class EventServiceIntegrationTests {
     void getEvent_whenExistingEvent_thenReturnEvent(){
         Event event = createEvent();
 
-        Event response = eventService.getEvent(event.getId());
+        Event response = eventService.getEventById(event.getId());
         assertThat(response, notNullValue());
         assertThat(response.getId(), is(event.getId()));
         assertThat(response.getName(), is(event.getName()));
@@ -58,7 +58,7 @@ class EventServiceIntegrationTests {
     @Test
     void getEvent_whenNonExistingEvent_thenThrowResourceNotFoundException(){
         Assertions.assertThrows(ResourceNotFoundException.class,
-                () -> eventService.getEvent(0));
+                () -> eventService.getEventById(0));
     }
 
     @Test
@@ -111,7 +111,7 @@ class EventServiceIntegrationTests {
         Event event = createEvent();
         eventService.deleteEvent(event.getId());
         Assertions.assertThrows(ResourceNotFoundException.class,
-                () -> eventService.getEvent(event.getId()));
+                () -> eventService.getEventById(event.getId()));
     }
 
     private Event createEvent() {
