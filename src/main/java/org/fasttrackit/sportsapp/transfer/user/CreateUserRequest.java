@@ -1,35 +1,28 @@
-package org.fasttrackit.sportsapp.domain;
+package org.fasttrackit.sportsapp.transfer.user;
 
+import org.fasttrackit.sportsapp.domain.UserRole;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-@Entity
-public class User {
+public class CreateUserRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @NotNull
+    private UserRole role;
     @NotNull
     private String firstName;
     @NotNull
     private String lastName;
-    private String photoUrl;
     @NotNull
     private String email;
     @NotNull
     private Integer phoneNumber;
-    private String role;
 
-    public long getId() {
-        return id;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -48,14 +41,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -72,24 +57,14 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
+        return "CreateUserRequest{" +
+                "role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
-                ", role='" + role + '\'' +
                 '}';
     }
 }
