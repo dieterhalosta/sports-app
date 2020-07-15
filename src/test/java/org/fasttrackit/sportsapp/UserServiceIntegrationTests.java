@@ -51,15 +51,20 @@ public class UserServiceIntegrationTests {
         request.setFirstName("UpdatedFirstName");
         request.setLastName("UpdateLastName");
         request.setEmail("updatetest@test.com");
+        request.setPhoneNumber(44448741);
+
 
         User updatedUser = userService.updateUser(user.getId(), request);
 
+        System.out.println(updatedUser);
+
         assertThat(updatedUser, CoreMatchers.notNullValue());
         assertThat(updatedUser.getId(), is(user.getId()));
-        assertThat(updatedUser.getRole(), is(request.getRole().name()));
         assertThat(updatedUser.getFirstName(), is(request.getFirstName()));
         assertThat(updatedUser.getLastName(), is(request.getLastName()));
         assertThat(updatedUser.getEmail(), is(request.getEmail()));
+        assertThat(updatedUser.getPhoneNumber(), is(request.getPhoneNumber()));
+        assertThat(updatedUser.getRole(), is(request.getRole().name()));
     }
 
     @Test
@@ -77,7 +82,7 @@ public class UserServiceIntegrationTests {
         request.setFirstName("TestFirstName");
         request.setLastName("TestLastName");
         request.setEmail("test@test.com");
-        request.setPhoneNumber(725888999);
+        request.setPhoneNumber(72588999);
 
         User user = userService.createUser(request);
 
