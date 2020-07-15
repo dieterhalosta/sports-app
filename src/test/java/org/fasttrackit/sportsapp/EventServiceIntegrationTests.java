@@ -3,6 +3,7 @@ package org.fasttrackit.sportsapp;
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.service.EventService;
+import org.fasttrackit.sportsapp.steps.EventTestSteps;
 import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,9 +26,12 @@ class EventServiceIntegrationTests {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private EventTestSteps eventTestSteps;
+
     @Test
     void createEvent_whenValidRequest_thenReturnCreatedProduct() {
-        createEvent();
+        eventTestSteps.createEvent();
     }
 
     @Test
@@ -43,7 +47,7 @@ class EventServiceIntegrationTests {
 
     @Test
     void getEvent_whenExistingEvent_thenReturnEvent(){
-        Event event = createEvent();
+        Event event = eventTestSteps.createEvent();
 
         Event response = eventService.getEventById(event.getId());
         assertThat(response, notNullValue());
@@ -63,7 +67,7 @@ class EventServiceIntegrationTests {
 
     @Test
     void updateEvent_whenExistingEventAndValidRequest_thenReturnUpdatedEvent(){
-        Event event = createEvent();
+        Event event = eventTestSteps.createEvent();
 
         SaveEventRequest request = new SaveEventRequest();
         request.setName(event.getName() + " for the IT Team");
@@ -94,7 +98,7 @@ class EventServiceIntegrationTests {
     @Test
     void updateEvent_whenNotAValidRequest_thenThrowException(){
 
-        Event event = createEvent();
+        Event event = eventTestSteps.createEvent();
         SaveEventRequest request = new SaveEventRequest();
         request.setName(event.getName() + " for the IT Team");
         request.setDescription(event.getDescription() + " with the IT guys.");
@@ -108,31 +112,11 @@ class EventServiceIntegrationTests {
 
     @Test
     void deleteEvent_whenExistingEvent_thenEventDoesNotExistAnymore(){
-        Event event = createEvent();
+        Event event = eventTestSteps.createEvent();
         eventService.deleteEvent(event.getId());
         Assertions.assertThrows(ResourceNotFoundException.class,
                 () -> eventService.getEventById(event.getId()));
     }
 
-    private Event createEvent() {
-        SaveEventRequest request = new SaveEventRequest();
-        request.setName("Carting");
-        request.setDate(LocalDate.of(2020, 7,10));
-        request.setDescription("A short game");
-        request.setLocation("Cluj");
-        request.setParticipants(8);
 
-
-        Event event = eventService.creatProduct(request);
-
-        assertThat(event, notNullValue());
-        assertThat(event.getId(), greaterThan(0L));
-        assertThat(event.getName(), is(request.getName()));
-        assertThat(event.getDate(), is(request.getDate()));
-        assertThat(event.getDescription(), is(request.getDescription()));
-        assertThat(event.getLocation(), is(request.getLocation()));
-        assertThat(event.getParticipants(), is(request.getParticipants()));
-
-        return event;
-    }
 }

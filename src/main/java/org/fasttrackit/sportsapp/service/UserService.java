@@ -39,6 +39,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
     public User getUser(long id) {
         LOGGER.info("Getting user {}", id);
 
@@ -50,7 +51,7 @@ public class UserService {
     }
 
     public User updateUser (long id, CreateUserRequest request){
-        LOGGER.info("Updating user {}: {}", id, request );
+        LOGGER.info("Updating user {}: {}", id, request);
 
         User user = getUser(id);
 
