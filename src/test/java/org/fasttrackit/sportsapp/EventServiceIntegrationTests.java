@@ -4,21 +4,18 @@ import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.service.EventService;
 import org.fasttrackit.sportsapp.steps.EventTestSteps;
-import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
+import org.fasttrackit.sportsapp.transfer.event.SaveEventRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.client.ResourceAccessException;
 
 import javax.validation.ConstraintViolationException;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
 class EventServiceIntegrationTests {

@@ -23,9 +23,6 @@ public class User {
     private Integer phoneNumber;
     private String role;
 
-//    @ManyToMany(mappedBy = "users")
-//    private Set<Game> games = new HashSet<>();
-
     public long getId() {
         return id;
     }
@@ -81,14 +78,6 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
-//    public Set<Game> getGames() {
-//        return games;
-//    }
-//
-//    public void setGames(Set<Game> games) {
-//        this.games = games;
-//    }
 
     @Override
     public String toString() {

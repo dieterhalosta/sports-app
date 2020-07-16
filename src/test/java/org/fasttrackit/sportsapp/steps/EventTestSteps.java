@@ -2,7 +2,7 @@ package org.fasttrackit.sportsapp.steps;
 
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.service.EventService;
-import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
+import org.fasttrackit.sportsapp.transfer.event.SaveEventRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class EventTestSteps {
     public Event createEvent() {
         SaveEventRequest request = new SaveEventRequest();
         request.setName("Carting");
-        request.setDate(LocalDate.of(2020, 7,10));
+        request.setDate(LocalDate.of(2020, 10,10));
         request.setDescription("A short game");
         request.setLocation("Cluj");
         request.setParticipants(8);

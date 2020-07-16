@@ -17,6 +17,8 @@ public class CreateUserRequest {
     @NotNull
     private Integer phoneNumber;
 
+    private String photoUrl;
+
     public UserRole getRole() {
         return role;
     }
@@ -57,6 +59,14 @@ public class CreateUserRequest {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
     @Override
     public String toString() {
         return "CreateUserRequest{" +
@@ -65,6 +75,7 @@ public class CreateUserRequest {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
+                ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }
 }

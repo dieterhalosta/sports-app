@@ -64,6 +64,7 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
+        user.setPhotoUrl(request.getPhotoUrl());
 
 
         return userRepository.save(user);

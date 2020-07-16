@@ -3,8 +3,8 @@ package org.fasttrackit.sportsapp.service;
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.EventRepository;
-import org.fasttrackit.sportsapp.transfer.GetEventsRequest;
-import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
+import org.fasttrackit.sportsapp.transfer.event.GetEventsRequest;
+import org.fasttrackit.sportsapp.transfer.event.SaveEventRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class EventService {

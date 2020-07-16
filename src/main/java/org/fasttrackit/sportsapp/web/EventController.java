@@ -3,8 +3,8 @@ package org.fasttrackit.sportsapp.web;
 
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.service.EventService;
-import org.fasttrackit.sportsapp.transfer.GetEventsRequest;
-import org.fasttrackit.sportsapp.transfer.SaveEventRequest;
+import org.fasttrackit.sportsapp.transfer.event.GetEventsRequest;
+import org.fasttrackit.sportsapp.transfer.event.SaveEventRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

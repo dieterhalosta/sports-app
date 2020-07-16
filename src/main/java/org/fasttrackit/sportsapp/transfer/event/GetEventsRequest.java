@@ -1,4 +1,4 @@
-package org.fasttrackit.sportsapp.transfer;
+package org.fasttrackit.sportsapp.transfer.event;
 
 import java.time.LocalDate;
 
