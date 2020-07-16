@@ -23,6 +23,9 @@ public class User {
     private Integer phoneNumber;
     private String role;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Game> game = new HashSet<>();
+
     public long getId() {
         return id;
     }
@@ -79,6 +82,14 @@ public class User {
         this.role = role;
     }
 
+    public Set<Game> getGame() {
+        return game;
+    }
+
+    public void setGame(Set<Game> game) {
+        this.game = game;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -90,5 +101,20 @@ public class User {
                 ", phoneNumber=" + phoneNumber +
                 ", role='" + role + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

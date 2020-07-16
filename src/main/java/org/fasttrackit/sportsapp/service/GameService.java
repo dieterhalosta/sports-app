@@ -2,6 +2,7 @@ package org.fasttrackit.sportsapp.service;
 
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.domain.Game;
+import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.slf4j.Logger;
@@ -18,11 +19,13 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final EventService eventService;
+    private final UserService userService;
 
     @Autowired
-    public GameService(GameRepository gameRepository, EventService eventService) {
+    public GameService(GameRepository gameRepository, EventService eventService, UserService userService) {
         this.gameRepository = gameRepository;
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @Transactional
@@ -37,8 +40,14 @@ public class GameService {
             game.setEvent(event);
         }
 
-        //add users
+        for (Long userId : request.getUserIds()){
+            User user = userService.getUser(userId);
+
+            game.addUser(user);
+        }
 
         gameRepository.save(game);
     }
+
+
 }

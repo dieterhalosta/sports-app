@@ -1,6 +1,7 @@
 package org.fasttrackit.sportsapp;
 
 import org.fasttrackit.sportsapp.domain.Event;
+import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.service.GameService;
 import org.fasttrackit.sportsapp.steps.EventTestSteps;
 import org.fasttrackit.sportsapp.steps.UserTestSteps;
@@ -8,6 +9,8 @@ import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Collections;
 
 @SpringBootTest
 public class GameServiceIntegrationTests {
@@ -26,9 +29,11 @@ public class GameServiceIntegrationTests {
     public void testAddUsersToGame_whenNewUser_thenCreateCartForUser(){
         Event event = eventTestSteps.createEvent();
 
-        AddUsersToGameRequest request = new AddUsersToGameRequest();
-        //add users ids
+        User user = userTestSteps.createUser();
 
+        AddUsersToGameRequest request = new AddUsersToGameRequest();
+
+        request.setUserIds(Collections.singletonList(user.getId()));
 
         gameService.addUsersToGame(event.getId(), request);
     }
