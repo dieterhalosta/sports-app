@@ -74,7 +74,6 @@ public class UserServiceIntegrationTests {
 
         User updatedUser = userService.updateUser(user.getId(), request);
 
-        System.out.println(updatedUser);
 
         assertThat(updatedUser, CoreMatchers.notNullValue());
         assertThat(updatedUser.getId(), is(user.getId()));

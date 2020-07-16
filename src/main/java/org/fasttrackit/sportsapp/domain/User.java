@@ -1,11 +1,10 @@
 package org.fasttrackit.sportsapp.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -23,6 +22,9 @@ public class User {
     @NotNull
     private Integer phoneNumber;
     private String role;
+
+//    @ManyToMany(mappedBy = "users")
+//    private Set<Game> games = new HashSet<>();
 
     public long getId() {
         return id;
@@ -79,6 +81,14 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+//    public Set<Game> getGames() {
+//        return games;
+//    }
+//
+//    public void setGames(Set<Game> games) {
+//        this.games = games;
+//    }
 
     @Override
     public String toString() {
