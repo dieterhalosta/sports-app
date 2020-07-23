@@ -3,14 +3,19 @@ package org.fasttrackit.sportsapp.service;
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.domain.Game;
 import org.fasttrackit.sportsapp.domain.User;
+import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
+import org.fasttrackit.sportsapp.transfer.game.GameResponse;
+import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GameService {
@@ -47,6 +52,34 @@ public class GameService {
         }
 
         gameRepository.save(game);
+    }
+
+    @Transactional
+    public GameResponse getGame(long id){
+        LOGGER.info("Retrieving game {}", id);
+
+        Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart " + id + " does not exist"));
+
+        GameResponse gameResponse = new GameResponse();
+        gameResponse.setId(game.getId());
+
+        List<UserInGameResponse> userDtos = new ArrayList<>();
+
+        for(User user : game.getUsers()){
+            UserInGameResponse userResponse = new UserInGameResponse();
+            userResponse.setId(user.getId());
+            userResponse.setEmail(user.getEmail());
+            userResponse.setFirstName(user.getFirstName());
+            userResponse.setLastName(user.getLastName());
+            userResponse.setPhoneNumber(user.getPhoneNumber());
+            userResponse.setPhotoUrl(user.getPhotoUrl());
+            userResponse.setRole(user.getRole());
+
+            userDtos.add(userResponse);
+        }
+
+        gameResponse.setUsers(userDtos);
+        return gameResponse;
     }
 
 
