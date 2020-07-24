@@ -1,19 +1,25 @@
 package org.fasttrackit.sportsapp.service;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.UserRepository;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -23,20 +29,28 @@ public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
-    private final ObjectMapper objectMapper;
+
 
     @Autowired
-    public UserService(UserRepository userRepository, ObjectMapper objectMapper) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.objectMapper = objectMapper;
+
     }
 
-    public User createUser (CreateUserRequest request){
+    public UserResponse createUser (CreateUserRequest request){
         LOGGER.info("Creating user {}", request);
 
-        User user = objectMapper.convertValue(request, User.class);
+        User user = new User();
+        user.setRole(request.getRole().name());
+        user.setLastName(request.getLastName());
+        user.setFirstName(request.getFirstName());
+        user.setPhotoUrl(request.getPhotoUrl());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setEmail(request.getEmail());
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        return mapUserResponse(savedUser);
     }
 
 
@@ -46,11 +60,24 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User "+ id + " not found"));
     }
 
-    public Page<User> getUsers (GetUserRequest request, Pageable pageable){
-        return userRepository.findByOptionalCriteria(request.getPartialFirstName(), request.getPartialLastName(), pageable);
+    @Transactional
+    public Page<UserResponse> getUsers (GetUserRequest request, Pageable pageable){
+        Page<User> page = userRepository.findByOptionalCriteria(request.getPartialFirstName(), request.getPartialLastName(), pageable);
+
+        List<UserResponse> userDtos = new ArrayList<>();
+
+        for(User user : page.getContent()){
+            UserResponse userResponse = mapUserResponse(user);
+
+            userDtos.add(userResponse);
+        }
+
+
+        return new PageImpl<>(userDtos, pageable, page.getTotalElements());
+
     }
 
-    public User updateUser (long id, CreateUserRequest request){
+    public UserResponse updateUser (long id, CreateUserRequest request){
         LOGGER.info("Updating user {}: {}", id, request);
 
         User user = getUser(id);
@@ -67,7 +94,9 @@ public class UserService {
         user.setPhotoUrl(request.getPhotoUrl());
 
 
-        return userRepository.save(user);
+        User updatedUser = userRepository.save(user);
+
+        return mapUserResponse(updatedUser);
     }
 
 
@@ -76,6 +105,19 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+
+    private UserResponse mapUserResponse(User user){
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setRole(user.getRole());
+        userResponse.setPhotoUrl(user.getPhotoUrl());
+        userResponse.setPhoneNumber(user.getPhoneNumber());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setEmail(user.getEmail());
+
+        return userResponse;
+    }
 
 
 }

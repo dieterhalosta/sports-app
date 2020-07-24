@@ -7,6 +7,7 @@ import org.fasttrackit.sportsapp.service.UserService;
 import org.fasttrackit.sportsapp.steps.UserTestSteps;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,19 +51,19 @@ public class UserServiceIntegrationTests {
 
     @Test
     public void getUser_whenExistingUser_thenReturnPageOfOneUser(){
-        User user = userTestSteps.createUser();
+        UserResponse user = userTestSteps.createUser();
 
-        Page<User> userPage = userService.getUsers(new GetUserRequest(), PageRequest.of(0,1000));
+        Page<UserResponse> userPage = userService.getUsers(new GetUserRequest(), PageRequest.of(0,1000));
 
         assertThat(userPage, CoreMatchers.notNullValue());
         assertThat(userPage.getTotalElements(), greaterThanOrEqualTo(1L));
-        assertThat(userPage.getContent(), contains(user));
+        assertThat(userPage.getContent().get(0).getId(), is(user.getId()));
     }
 
 
     @Test
     public void updateUser_whenExistingUser_thenReturnUpdatedUser(){
-        User user = userTestSteps.createUser();
+        UserResponse user = userTestSteps.createUser();
 
         CreateUserRequest request = new CreateUserRequest();
         request.setRole(UserRole.PLAYER);
@@ -72,7 +73,7 @@ public class UserServiceIntegrationTests {
         request.setPhoneNumber(44448741);
 
 
-        User updatedUser = userService.updateUser(user.getId(), request);
+        UserResponse updatedUser = userService.updateUser(user.getId(), request);
 
 
         assertThat(updatedUser, CoreMatchers.notNullValue());
@@ -86,7 +87,7 @@ public class UserServiceIntegrationTests {
 
     @Test
     public void deleteUser_whenExistingUser_thenReturnNotExistingAnymore(){
-        User user = userTestSteps.createUser();
+        UserResponse user = userTestSteps.createUser();
 
         userService.deleteUser(user.getId());
 

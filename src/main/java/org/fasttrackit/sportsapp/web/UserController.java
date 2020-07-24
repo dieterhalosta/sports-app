@@ -5,6 +5,7 @@ import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.service.UserService;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody CreateUserRequest request){
-        User user = userService.createUser(request);
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request){
+        UserResponse user = userService.createUser(request);
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
@@ -42,16 +43,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<User>> getUsers (@Valid GetUserRequest request, Pageable pageable){
-        Page<User> users = userService.getUsers(request, pageable);
+    public ResponseEntity<Page<UserResponse>> getUsers (@Valid GetUserRequest request, Pageable pageable){
+        Page<UserResponse> users = userService.getUsers(request, pageable);
 
         return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @Valid @RequestBody CreateUserRequest request){
-        User user = userService.updateUser(id, request);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable long id, @Valid @RequestBody CreateUserRequest request){
+        UserResponse user = userService.updateUser(id, request);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

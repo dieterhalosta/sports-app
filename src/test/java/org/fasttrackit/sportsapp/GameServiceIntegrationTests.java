@@ -1,12 +1,12 @@
 package org.fasttrackit.sportsapp;
 
 import org.fasttrackit.sportsapp.domain.Event;
-import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.service.GameService;
 import org.fasttrackit.sportsapp.steps.EventTestSteps;
 import org.fasttrackit.sportsapp.steps.UserTestSteps;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
+import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,7 +35,7 @@ public class GameServiceIntegrationTests {
     public void testAddUsersToGame_whenNewUser_thenCreateCartForUser(){
         Event event = eventTestSteps.createEvent();
 
-        User user = userTestSteps.createUser();
+        UserResponse user = userTestSteps.createUser();
 
         AddUsersToGameRequest request = new AddUsersToGameRequest();
 
