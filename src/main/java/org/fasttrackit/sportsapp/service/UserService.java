@@ -82,9 +82,6 @@ public class UserService {
 
         User user = getUser(id);
 
-//        User updatedUserRequest = objectMapper.convertValue(request, User.class);
-
-//        BeanUtils.copyProperties(request,user);
 
         user.setRole(request.getRole().name());
         user.setFirstName(request.getFirstName());
