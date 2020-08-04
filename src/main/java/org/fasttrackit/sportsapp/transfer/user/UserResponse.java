@@ -1,6 +1,5 @@
 package org.fasttrackit.sportsapp.transfer.user;
 
-import javax.validation.constraints.NotNull;
 
 public class UserResponse {
 

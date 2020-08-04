@@ -1,6 +1,6 @@
 package org.fasttrackit.sportsapp.web;
 
-import org.fasttrackit.sportsapp.domain.Game;
+
 import org.fasttrackit.sportsapp.service.GameService;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;

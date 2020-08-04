@@ -10,11 +10,6 @@ import java.time.LocalDate;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-        Page<Event> findByNameContaining(String partialName, Pageable pageable);
-
-        Page<Event> findByNameContainingAndDateGreaterThanEqual(String partialName, LocalDate date, Pageable pageable);
-
-        Page<Event> findByNameContainingAndDateGreaterThanEqualAndLocationContaining(String partialName, LocalDate date, String partialLocation, Pageable pageable);
 
         Page<Event> findByDateGreaterThanEqual(LocalDate date, Pageable page);
 

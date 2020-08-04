@@ -26,7 +26,6 @@ public class EventService {
     }
 
     public Event creatProduct(SaveEventRequest request){
-//        System.out.println("Creating Product: " + request);
 
         LOGGER.info("Creating product {}", request);
 
@@ -37,8 +36,7 @@ public class EventService {
         event.setDate(request.getDate());
         event.setLocation(request.getLocation());
         event.setImageUrl(request.getImageUrl());
-//
-//        BeanUtils.copyProperties(request, event);
+
 
         return eventRepository.save(event);
     }
