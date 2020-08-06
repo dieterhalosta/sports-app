@@ -23,7 +23,7 @@ public class UserTestSteps {
         request.setFirstName("TestFirstName");
         request.setLastName("TestLastName");
         request.setEmail("test@test.com");
-        request.setPhoneNumber(72588999);
+        request.setPhoneNumber("72588999");
 
         UserResponse user = userService.createUser(request);
 

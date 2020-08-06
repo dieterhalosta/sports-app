@@ -74,7 +74,7 @@ public class UserServiceIntegrationTests {
         request.setFirstName("UpdatedFirstName");
         request.setLastName("UpdateLastName");
         request.setEmail("updatetest@test.com");
-        request.setPhoneNumber(44448741);
+        request.setPhoneNumber("44448741");
 
 
         UserResponse updatedUser = userService.updateUser(user.getId(), request);

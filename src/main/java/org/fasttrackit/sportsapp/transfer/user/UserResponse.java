@@ -8,7 +8,7 @@ public class UserResponse {
     private String lastName;
     private String photoUrl;
     private String email;
-    private Integer phoneNumber;
+    private String phoneNumber;
     private String role;
 
     public long getId() {
@@ -51,11 +51,11 @@ public class UserResponse {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -5,7 +5,7 @@ public class GetUserRequest {
     private String partialFirstName;
     private String partialLastName;
     private String partialEmail;
-    private Integer partialNumber;
+    private String partialNumber;
 
     public String getPartialFirstName() {
         return partialFirstName;
@@ -31,11 +31,11 @@ public class GetUserRequest {
         this.partialEmail = partialEmail;
     }
 
-    public Integer getPartialNumber() {
+    public String getPartialNumber() {
         return partialNumber;
     }
 
-    public void setPartialNumber(Integer partialNumber) {
+    public void setPartialNumber(String partialNumber) {
         this.partialNumber = partialNumber;
     }
 

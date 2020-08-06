@@ -20,7 +20,7 @@ public class User {
     @NotNull
     private String email;
     @NotNull
-    private Integer phoneNumber;
+    private String phoneNumber;
     private String role;
 
     @ManyToMany(mappedBy = "users")
@@ -66,11 +66,11 @@ public class User {
         this.email = email;
     }
 
-    public Integer getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
