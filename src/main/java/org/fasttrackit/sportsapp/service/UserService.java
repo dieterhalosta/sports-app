@@ -54,10 +54,12 @@ public class UserService {
     }
 
 
-    public User getUser(long id) {
+    public UserResponse getUser(long id) {
         LOGGER.info("Getting user {}", id);
 
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User "+ id + " not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User " + id + " not found"));
+
+        return mapUserResponse(user);
     }
 
     @Transactional
