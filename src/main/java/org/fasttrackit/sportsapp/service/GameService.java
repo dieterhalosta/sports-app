@@ -91,14 +91,7 @@ public class GameService {
             userDtos.add(userResponse);
         }
 
-        User mainUser = new User();
-        mainUser.setId(userDtos.get(0).getId());
-        mainUser.setFirstName(userDtos.get(0).getFirstName());
-        mainUser.setLastName(userDtos.get(0).getLastName());
-        mainUser.setEmail(userDtos.get(0).getEmail());
-        mainUser.setPhoneNumber(userDtos.get(0).getPhoneNumber());
-        mainUser.setPhotoUrl(userDtos.get(0).getPhotoUrl());
-        mainUser.setRole(userDtos.get(0).getRole());
+
 
         EventInGameResponse event = new EventInGameResponse();
         event.setId(game.getId());
@@ -111,7 +104,21 @@ public class GameService {
 
         gameResponse.setUsers(userDtos);
         gameResponse.setEvent(event);
-        gameResponse.setMainUser(mainUser);
+
+
+        if (userDtos.get(0) != null){
+            User mainUser = new User();
+            mainUser.setId(userDtos.get(0).getId());
+            mainUser.setFirstName(userDtos.get(0).getFirstName());
+            mainUser.setLastName(userDtos.get(0).getLastName());
+            mainUser.setEmail(userDtos.get(0).getEmail());
+            mainUser.setPhoneNumber(userDtos.get(0).getPhoneNumber());
+            mainUser.setPhotoUrl(userDtos.get(0).getPhotoUrl());
+            mainUser.setRole(userDtos.get(0).getRole());
+
+            gameResponse.setMainUser(mainUser);
+        }
+
         return gameResponse;
     }
 
