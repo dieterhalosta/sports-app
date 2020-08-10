@@ -6,6 +6,7 @@ public class GameResponse {
 
     private long id;
     private List<UserInGameResponse> users;
+    private EventInGameResponse event;
 
     public long getId() {
         return id;
@@ -21,5 +22,13 @@ public class GameResponse {
 
     public void setUsers(List<UserInGameResponse> users) {
         this.users = users;
+    }
+
+    public EventInGameResponse getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventInGameResponse event) {
+        this.event = event;
     }
 }

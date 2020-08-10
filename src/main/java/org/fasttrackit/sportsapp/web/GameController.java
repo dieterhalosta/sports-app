@@ -43,8 +43,8 @@ public class GameController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Game>> getGames(@Valid GetGamesRequest request, Pageable pageable){
-        Page<Game> games = gameService.getGames(request, pageable);
+    public ResponseEntity<Page<Game>> getGames(Pageable pageable){
+        Page<Game> games = gameService.getGames(pageable);
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
 

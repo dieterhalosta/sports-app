@@ -88,8 +88,10 @@ public class GameService {
         return gameResponse;
     }
 
-    public Page<Game> getGames (GetGamesRequest request, Pageable pageable){
-        return gameRepository.findAll(pageable);
+    public Page<GameResponse> getGames (Pageable pageable){
+        Page<Game> page = gameRepository.findAll(pageable);
+
+
     }
 
 }
