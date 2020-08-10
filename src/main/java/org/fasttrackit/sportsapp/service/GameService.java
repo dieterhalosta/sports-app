@@ -7,6 +7,7 @@ import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
 
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
+import org.fasttrackit.sportsapp.transfer.game.EventInGameResponse;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
 
 import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
@@ -90,10 +91,21 @@ public class GameService {
             userDtos.add(userResponse);
         }
 
+        EventInGameResponse event = new EventInGameResponse();
+        event.setId(game.getId());
+        event.setDate(game.getEvent().getDate());
+        event.setDescription(game.getEvent().getDescription());
+        event.setName(game.getEvent().getName());
+        event.setImageUrl(game.getEvent().getImageUrl());
+        event.setParticipants(game.getEvent().getParticipants());
+        event.setLocation(game.getEvent().getLocation());
+
         gameResponse.setUsers(userDtos);
+        gameResponse.setEvent(event);
         return gameResponse;
     }
 
+    @Transactional
     public Page<GameResponse> getGames (Pageable pageable){
         Page<Game> page = gameRepository.findAll(pageable);
 
