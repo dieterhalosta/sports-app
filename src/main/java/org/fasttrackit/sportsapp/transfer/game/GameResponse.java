@@ -1,5 +1,7 @@
 package org.fasttrackit.sportsapp.transfer.game;
 
+import org.fasttrackit.sportsapp.domain.User;
+
 import java.util.List;
 
 public class GameResponse {
@@ -7,6 +9,7 @@ public class GameResponse {
     private long id;
     private List<UserInGameResponse> users;
     private EventInGameResponse event;
+    private User mainUser;
 
     public long getId() {
         return id;
@@ -30,5 +33,13 @@ public class GameResponse {
 
     public void setEvent(EventInGameResponse event) {
         this.event = event;
+    }
+
+    public User getMainUser() {
+        return mainUser;
+    }
+
+    public void setMainUser(User mainUser) {
+        this.mainUser = mainUser;
     }
 }
