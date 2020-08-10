@@ -8,7 +8,7 @@ import org.fasttrackit.sportsapp.persistance.GameRepository;
 
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
-import org.fasttrackit.sportsapp.transfer.game.GetGamesRequest;
+
 import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
 
 import org.slf4j.Logger;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +67,11 @@ public class GameService {
 
         Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart " + id + " does not exist"));
 
+        return mapGameResponse(game);
+    }
+
+
+    private GameResponse mapGameResponse(Game game) {
         GameResponse gameResponse = new GameResponse();
         gameResponse.setId(game.getId());
 
@@ -91,7 +97,15 @@ public class GameService {
     public Page<GameResponse> getGames (Pageable pageable){
         Page<Game> page = gameRepository.findAll(pageable);
 
+        List<GameResponse> gameDtos = new ArrayList<>();
 
+        for(Game game : page.getContent()){
+            GameResponse gameResponse = mapGameResponse(game);
+
+            gameDtos.add(gameResponse);
+        }
+
+        return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
     }
 
 }
