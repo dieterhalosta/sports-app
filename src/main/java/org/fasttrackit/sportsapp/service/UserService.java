@@ -53,13 +53,19 @@ public class UserService {
         return mapUserResponse(savedUser);
     }
 
-
+    @Transactional
     public UserResponse getUser(long id) {
         LOGGER.info("Getting user {}", id);
 
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User " + id + " not found"));
 
         return mapUserResponse(user);
+    }
+
+    public User getSimpleUser(long id){
+        LOGGER.info("Getting user {}", id);
+
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User " + id + " not found"));
     }
 
     @Transactional
@@ -79,7 +85,7 @@ public class UserService {
 
     }
 
-
+    @Transactional
     public UserResponse updateUser (long id, CreateUserRequest request){
         LOGGER.info("Updating user {}: {}", id, request);
 

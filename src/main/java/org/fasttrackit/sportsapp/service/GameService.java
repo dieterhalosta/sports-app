@@ -5,12 +5,18 @@ import org.fasttrackit.sportsapp.domain.Game;
 import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
+import org.fasttrackit.sportsapp.transfer.event.GetEventsRequest;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
 import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
+import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -46,7 +52,7 @@ public class GameService {
         }
 
         for (Long userId : request.getUserIds()){
-            User user = userService.getUser(userId);
+            User user = userService.getSimpleUser(userId);
 
             game.addUser(user);
         }
@@ -81,6 +87,7 @@ public class GameService {
         gameResponse.setUsers(userDtos);
         return gameResponse;
     }
+
 
 
 }
