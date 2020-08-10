@@ -89,7 +89,7 @@ public class UserService {
     public UserResponse updateUser (long id, CreateUserRequest request){
         LOGGER.info("Updating user {}: {}", id, request);
 
-        UserResponse user = getUser(id);
+        User user = getSimpleUser(id);
 
         user.setRole(request.getRole().name());
         user.setFirstName(request.getFirstName());
@@ -98,11 +98,10 @@ public class UserService {
         user.setPhoneNumber(request.getPhoneNumber());
         user.setPhotoUrl(request.getPhotoUrl());
 
-        User updateUser = mapBack(user);
+        User updateUser = userRepository.save(user);;
 
-        User save = userRepository.save(updateUser);
 
-        return mapUserResponse(save);
+        return mapUserResponse(updateUser);
     }
 
 
@@ -125,18 +124,5 @@ public class UserService {
         return userResponse;
     }
 
-    private User mapBack (UserResponse userResponse){
-        User user = new User();
-        user.setId(userResponse.getId());
-        user.setRole(userResponse.getRole());
-        user.setPhotoUrl(userResponse.getPhotoUrl());
-        user.setPhoneNumber(userResponse.getPhoneNumber());
-        user.setLastName(userResponse.getLastName());
-        user.setFirstName(userResponse.getFirstName());
-        user.setEmail(userResponse.getEmail());
-
-        return user;
-
-    }
 
 }

@@ -1,10 +1,12 @@
 package org.fasttrackit.sportsapp.web;
 
 
+import org.fasttrackit.sportsapp.domain.Game;
 import org.fasttrackit.sportsapp.service.GameService;
 import org.fasttrackit.sportsapp.transfer.event.GetEventsRequest;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
+import org.fasttrackit.sportsapp.transfer.game.GetGamesRequest;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +43,9 @@ public class GameController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GameResponse>> getGames (@Valid GetEventsRequest request, Pageable pageable){
-        Page<GameResponse> games = gameService.getGames(request, pageable);
-
+    public ResponseEntity<Page<Game>> getGames(@Valid GetGamesRequest request, Pageable pageable){
+        Page<Game> games = gameService.getGames(request, pageable);
         return new ResponseEntity<>(games, HttpStatus.OK);
-
     }
 
 }
