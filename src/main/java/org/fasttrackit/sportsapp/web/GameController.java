@@ -1,14 +1,9 @@
 package org.fasttrackit.sportsapp.web;
 
 
-import org.fasttrackit.sportsapp.domain.Game;
 import org.fasttrackit.sportsapp.service.GameService;
-import org.fasttrackit.sportsapp.transfer.event.GetEventsRequest;
 import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
 import org.fasttrackit.sportsapp.transfer.game.GameResponse;
-import org.fasttrackit.sportsapp.transfer.game.GetGamesRequest;
-import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
-import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

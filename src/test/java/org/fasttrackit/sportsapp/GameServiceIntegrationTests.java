@@ -36,7 +36,7 @@ public class GameServiceIntegrationTests {
 
 
     @Test
-    public void testAddUsersToGame_whenNewUser_thenCreateCartForUser(){
+    public void testAddUsersToGame_whenNewUser_thenCreateGameForUser(){
         Event event = eventTestSteps.createEvent();
 
         UserResponse user = userTestSteps.createUser();

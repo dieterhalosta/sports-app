@@ -62,11 +62,13 @@ public class GameService {
         gameRepository.save(game);
     }
 
+
+
     @Transactional
     public GameResponse getGame(long id){
         LOGGER.info("Retrieving game {}", id);
 
-        Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart " + id + " does not exist"));
+        Game game = gameRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Game " + id + " does not exist"));
 
         return mapGameResponse(game);
     }
@@ -136,5 +138,6 @@ public class GameService {
 
         return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
     }
+
 
 }
