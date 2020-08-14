@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-
         Page<Event> findByDateGreaterThanEqual(LocalDate date, Pageable page);
 
         @Query("SELECT event FROM Event event WHERE (:partialName IS null OR event.name LIKE %:partialName%) AND (:dateQuery IS null or event.date = :dateQuery) AND (:partialLocation IS null or event.location LIKE %:partialLocation%)")

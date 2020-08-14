@@ -1,7 +1,6 @@
 package org.fasttrackit.sportsapp.web;
 
 
-import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.service.UserService;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
