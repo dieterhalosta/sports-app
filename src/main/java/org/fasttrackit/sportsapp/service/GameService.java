@@ -62,7 +62,6 @@ public class GameService {
     public void addEventToGame (long eventID) {
         LOGGER.info("Adding event to game {}", eventID);
 
-
         Game game = gameRepository.findById(eventID).orElse(new Game());
 
         if(game.getEvent() == null){
