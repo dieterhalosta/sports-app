@@ -43,4 +43,10 @@ public class GameController {
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<Void> addEventToGame (long eventId){
+        gameService.addEventToGame(eventId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

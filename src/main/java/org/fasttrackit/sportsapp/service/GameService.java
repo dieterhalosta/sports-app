@@ -58,13 +58,23 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    public void addEventToGame (AddEventToGameRequest request) {
-        LOGGER.info("Adding event to game {}", request);
+    @Transactional
+    public void addEventToGame (long eventID) {
+        LOGGER.info("Adding event to game {}", eventID);
 
-        Game game = new Game();
 
+        Game game = gameRepository.findById(eventID).orElse(new Game());
+
+        if(game.getEvent() == null){
+            Event event = eventService.getEventById(eventID);
+
+            game.setEvent(event);
+            gameRepository.save(game);
+        }
 
     }
+
+
 
     @Transactional
     public GameResponse getGame(long id){
