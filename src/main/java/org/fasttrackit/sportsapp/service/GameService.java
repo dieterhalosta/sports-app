@@ -6,11 +6,7 @@ import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
 
-import org.fasttrackit.sportsapp.transfer.game.AddUsersToGameRequest;
-import org.fasttrackit.sportsapp.transfer.game.EventInGameResponse;
-import org.fasttrackit.sportsapp.transfer.game.GameResponse;
-
-import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
+import org.fasttrackit.sportsapp.transfer.game.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +58,13 @@ public class GameService {
         gameRepository.save(game);
     }
 
+    public void addEventToGame (AddEventToGameRequest request) {
+        LOGGER.info("Adding event to game {}", request);
 
+        Game game = new Game();
+
+
+    }
 
     @Transactional
     public GameResponse getGame(long id){
