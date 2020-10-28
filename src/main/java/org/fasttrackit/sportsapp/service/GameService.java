@@ -8,6 +8,7 @@ import org.fasttrackit.sportsapp.persistance.GameRepository;
 
 import org.fasttrackit.sportsapp.transfer.game.*;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +149,22 @@ public class GameService {
         }
 
         return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
+    }
+
+    @Transactional
+    public Page<GameResponse> getUserGame (long userId, Pageable pageable){
+        Page<Game> page = gameRepository.getUserEvents(userId, pageable);
+
+        List<GameResponse> userDtos = new ArrayList<>();
+
+        for(Game game : page.getContent()){
+            GameResponse getUserGameResponse = mapGameResponse(game);
+
+            userDtos.add(getUserGameResponse);
+        }
+
+        return new PageImpl<>(userDtos, pageable, page.getTotalElements());
+
     }
 
 
