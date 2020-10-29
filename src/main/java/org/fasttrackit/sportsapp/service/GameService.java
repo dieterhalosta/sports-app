@@ -75,7 +75,6 @@ public class GameService {
     }
 
 
-
     @Transactional
     public GameResponse getGame(long id){
         LOGGER.info("Retrieving game {}", id);
@@ -84,6 +83,41 @@ public class GameService {
 
         return mapGameResponse(game);
     }
+
+
+
+    @Transactional
+    public Page<GameResponse> getGames (Pageable pageable){
+        LOGGER.info("Retrieving all games");
+        Page<Game> page = gameRepository.findAll(pageable);
+
+        List<GameResponse> gameDtos = new ArrayList<>();
+
+        for(Game game : page.getContent()){
+            GameResponse gameResponse = mapGameResponse(game);
+
+            gameDtos.add(gameResponse);
+        }
+
+        return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
+    }
+
+//    @Transactional
+//    public Page<GameResponse> getUserGames(long userId, Pageable pageable){
+//        LOGGER.info("Getting games for user {}", userId);
+//
+//        Page<Game> page = gameRepository.getUserEvents(userId, pageable);
+//
+//        List<GameResponse> userGamesDto = new ArrayList<>();
+//
+//        for(Game game : page.getContent()){
+//            GameResponse getUserGameResponse = mapGameResponse(game);
+//
+//            userGamesDto.add(getUserGameResponse);
+//        }
+//
+//        return new PageImpl<>(userGamesDto, pageable, page.getTotalElements());
+//    }
 
 
     private GameResponse mapGameResponse(Game game) {
@@ -104,7 +138,6 @@ public class GameService {
 
             userDtos.add(userResponse);
         }
-
 
 
         EventInGameResponse event = new EventInGameResponse();
@@ -136,36 +169,6 @@ public class GameService {
         return gameResponse;
     }
 
-    @Transactional
-    public Page<GameResponse> getGames (Pageable pageable){
-        Page<Game> page = gameRepository.findAll(pageable);
-
-        List<GameResponse> gameDtos = new ArrayList<>();
-
-        for(Game game : page.getContent()){
-            GameResponse gameResponse = mapGameResponse(game);
-
-            gameDtos.add(gameResponse);
-        }
-
-        return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
-    }
-
-    @Transactional
-    public Page<GameResponse> getUserGame (long userId, Pageable pageable){
-        Page<Game> page = gameRepository.getUserEvents(userId, pageable);
-
-        List<GameResponse> userDtos = new ArrayList<>();
-
-        for(Game game : page.getContent()){
-            GameResponse getUserGameResponse = mapGameResponse(game);
-
-            userDtos.add(getUserGameResponse);
-        }
-
-        return new PageImpl<>(userDtos, pageable, page.getTotalElements());
-
-    }
 
 
 }

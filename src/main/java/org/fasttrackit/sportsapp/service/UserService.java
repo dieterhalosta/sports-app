@@ -2,10 +2,16 @@ package org.fasttrackit.sportsapp.service;
 
 
 
+import org.fasttrackit.sportsapp.domain.Event;
+import org.fasttrackit.sportsapp.domain.Game;
 import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.UserRepository;
+import org.fasttrackit.sportsapp.transfer.game.EventInGameResponse;
+import org.fasttrackit.sportsapp.transfer.game.GameResponse;
+import org.fasttrackit.sportsapp.transfer.game.UserInGameResponse;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.GetUserGameResponse;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.slf4j.Logger;
@@ -24,8 +30,6 @@ import java.util.List;
 
 @Service
 public class UserService {
-
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -80,10 +84,24 @@ public class UserService {
             userDtos.add(userResponse);
         }
 
-
         return new PageImpl<>(userDtos, pageable, page.getTotalElements());
 
     }
+
+    public Page<GetUserGameResponse> getuserGames (long userId, Pageable pageable){
+        Page<Game> page = userRepository.getUserEvents(userId, pageable);
+        List<GetUserGameResponse> gameDtos = new ArrayList<>();
+
+        for (Game game : page.getContent()){
+            GetUserGameResponse getUserGameResponse = mapGameResponse(game);
+
+            gameDtos.add(getUserGameResponse);
+        }
+
+        return new PageImpl<>(gameDtos, pageable, page.getTotalElements());
+    }
+
+
 
     @Transactional
     public UserResponse updateUser (long id, CreateUserRequest request){
@@ -98,7 +116,7 @@ public class UserService {
         user.setPhoneNumber(request.getPhoneNumber());
         user.setPhotoUrl(request.getPhotoUrl());
 
-        User updateUser = userRepository.save(user);;
+        User updateUser = userRepository.save(user);
 
 
         return mapUserResponse(updateUser);
@@ -109,6 +127,23 @@ public class UserService {
         LOGGER.info("Deleting user {}", id);
         userRepository.deleteById(id);
     }
+
+//    @Transactional
+//    public Page<GetUserGameResponse> getUserGames(long userId, Pageable pageable){
+//        LOGGER.info("Getting games for user {}", userId);
+//
+//        Page<Game> page = userRepository.getUserEvents(userId, pageable);
+//
+//        List<GetUserGameResponse> userGamesDto = new ArrayList<>();
+//
+//        for(Game game : page.getContent()){
+//            GetUserGameResponse getUserGameResponse = mapGameResponse(game);
+//
+//            userGamesDto.add(getUserGameResponse);
+//        }
+//
+//        return new PageImpl<>(userGamesDto, pageable, page.getTotalElements());
+//    }
 
 
     private UserResponse mapUserResponse(User user){
@@ -124,5 +159,39 @@ public class UserService {
         return userResponse;
     }
 
+
+    private GetUserGameResponse mapGameResponse(Game game) {
+        GetUserGameResponse gameResponse = new GetUserGameResponse();
+        gameResponse.setId(game.getId());
+
+        List<EventInGameResponse> eventDtos = new ArrayList<>();
+
+        for(Game events : game.getGame()){
+            EventInGameResponse eventResponse = new EventInGameResponse();
+            eventResponse.setId(game.getId());
+            eventResponse.setDescription(game.getEvent().getDescription());
+            eventResponse.setDate(game.getEvent().getDate());
+            eventResponse.setImageUrl(game.getEvent().getImageUrl());
+            eventResponse.setLocation(game.getEvent().getLocation());
+            eventResponse.setName(game.getEvent().getName());
+            eventResponse.setParticipants(game.getEvent().getParticipants());
+
+            eventDtos.add(eventResponse);
+        }
+
+        User mainUser = new User();
+        mainUser.setId(user.getId());
+        mainUser.setRole(user.getRole());
+        mainUser.setPhotoUrl(user.getPhotoUrl());
+        mainUser.setPhoneNumber(user.getPhoneNumber());
+        mainUser.setLastName(user.getLastName());
+        mainUser.setFirstName(user.getFirstName());
+        mainUser.setEmail(user.getEmail());
+
+        gameResponse.setEvents(eventDtos);
+        gameResponse.setUser(mainUser);
+
+        return gameResponse;
+    }
 
 }

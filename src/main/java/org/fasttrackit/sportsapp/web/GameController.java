@@ -49,11 +49,11 @@ public class GameController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Page<GameResponse>> getUserGames(@PathVariable long userId, Pageable pageable){
-        Page<GameResponse> userGames = gameService.getUserGame(userId, pageable);
-
-        return new ResponseEntity<>(userGames, HttpStatus.OK);
-    }
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<Page<GameResponse>> getUserGames(@PathVariable long userId, Pageable pageable){
+//        Page<GameResponse> userGames = gameService.getUserGames(userId, pageable);
+//
+//        return new ResponseEntity<>(userGames, HttpStatus.OK);
+//    }
 
 }

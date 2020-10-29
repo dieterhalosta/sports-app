@@ -23,7 +23,6 @@ public class Game {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
-
     public void addUser(User user){
         users.add(user);
 
