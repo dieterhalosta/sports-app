@@ -49,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
-    @GetMapping("/{userId}")
+    @GetMapping("/games/{userId}")
     public ResponseEntity<Page<GetUserGameResponse>> getUserGames(@PathVariable long userId, Pageable pageable){
         Page<GetUserGameResponse> userGames = userService.getUserGames(userId, pageable);
 
