@@ -3,6 +3,7 @@ package org.fasttrackit.sportsapp.web;
 
 import org.fasttrackit.sportsapp.service.UserService;
 import org.fasttrackit.sportsapp.transfer.user.CreateUserRequest;
+import org.fasttrackit.sportsapp.transfer.user.GetUserGameResponse;
 import org.fasttrackit.sportsapp.transfer.user.GetUserRequest;
 import org.fasttrackit.sportsapp.transfer.user.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,12 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<Page<GetUserGameResponse>> getUserGames(@PathVariable long userId, Pageable pageable){
+        Page<GetUserGameResponse> userGames = userService.getUserGames(userId, pageable);
 
+        return new ResponseEntity<>(userGames, HttpStatus.OK);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable long id, @Valid @RequestBody CreateUserRequest request){
