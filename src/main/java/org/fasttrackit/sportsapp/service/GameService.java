@@ -2,6 +2,7 @@ package org.fasttrackit.sportsapp.service;
 
 import org.fasttrackit.sportsapp.domain.Event;
 import org.fasttrackit.sportsapp.domain.Game;
+import org.fasttrackit.sportsapp.domain.MainUser;
 import org.fasttrackit.sportsapp.domain.User;
 import org.fasttrackit.sportsapp.exception.ResourceNotFoundException;
 import org.fasttrackit.sportsapp.persistance.GameRepository;
@@ -154,7 +155,7 @@ public class GameService {
 
 
         if (userDtos.get(0) != null){
-            User mainUser = new User();
+            MainUser mainUser = new MainUser();
             mainUser.setId(userDtos.get(0).getId());
             mainUser.setFirstName(userDtos.get(0).getFirstName());
             mainUser.setLastName(userDtos.get(0).getLastName());

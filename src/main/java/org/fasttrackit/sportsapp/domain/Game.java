@@ -23,6 +23,10 @@ public class Game {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
+
+    @OneToOne
+    private MainUser mainUser;
+
     public void addUser(User user){
         users.add(user);
 
@@ -56,6 +60,14 @@ public class Game {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public User getMainUser() {
+        return mainUser;
+    }
+
+    public void setMainUser(MainUser mainUser) {
+        this.mainUser = mainUser;
     }
 
     @Override
